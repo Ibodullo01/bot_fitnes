@@ -1,0 +1,35 @@
+version: '3.11'
+
+services:
+  fitnes:
+    build: .
+#    image: ibodullo01/
+    restart: always
+    container_name: fitnes_bot
+    environment:
+      BOT_TOKEN: 6588236458:AAF4NSFc0q0hmBqXj226oLqwkHTI2dEbbmk
+      DB_NAME: postgres
+      DB_PASSWORD: 1
+      DB_HOST: pg
+      DB_PORT: 5432
+      DB_USER: postgres
+      TZ: Asia/Tashkent
+    depends_on:
+      - pg
+    command: python3 main.py
+
+  pg:
+    image: postgres:alpine
+    restart: always
+    container_name: py_postgres
+    environment:
+      POSTGRES_PASSWORD: 1
+      TZ: Asia/Tashkent
+    ports:
+      - 5432:5432
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+
+volumes:
+  pg_data :
